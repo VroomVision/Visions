@@ -1,0 +1,245 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 270 88% 65%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 240 3.7% 15.9%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 270 88% 65%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 270 88% 65%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    /* Use Tailwind's bg-[color] and text-[color] utilities instead of non-existent bg-background/text-foreground */
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .btn-rotate-border {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .btn-rotate-border::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+      transparent 0%,
+      transparent 40%,
+      #ffffff 50%,
+      transparent 60%,
+      transparent 100%
+    );
+    animation: rotate-border 3s linear infinite;
+    z-index: -1;
+  }
+
+  .btn-rotate-border::after {
+    content: '';
+    position: absolute;
+    inset: 2px; /* Adjust this value to control the gap between the border and the button content */
+    background-color: rgba(24, 24, 27, 0.8); /* Match button background or use a slightly darker shade */
+    border-radius: inherit; /* Inherit border-radius from the button */
+    z-index: -1;
+  }
+}
+
+.bg-brand-purple {
+  background-color: rgb(168, 85, 247);
+}
+
+.text-brand-purple {
+  color: #A855F7;
+}
+
+.bg-brand-dark {
+  background-color: rgba(24, 24, 27, 0.5);
+}
+
+.bg-brand-gray {
+  background-color: rgba(39, 39, 42, 0.6);
+  backdrop-filter: blur(8px);
+}
+
+.bg-brand-light {
+  background-color: rgb(244, 244, 245);
+}
+
+.discount-badge {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background-color: rgb(220, 38, 38);
+  color: white;
+  font-weight: 600;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+/* These classes are already defined by Tailwind */
+/* Removing the circular dependencies */
+
+.comparison-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
+}
+
+.comparison-slider .before,
+.comparison-slider .after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+}
+
+.comparison-slider .before {
+  z-index: 1;
+  clip-path: polygon(0 0, var(--position) 0, var(--position) 100%, 0 100%);
+}
+
+.comparison-slider .handle {
+  position: absolute;
+  top: 0;
+  left: var(--position);
+  height: 100%;
+  width: 3px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+  z-index: 3;
+  cursor: ew-resize;
+  transform: translateX(-50%);
+}
+
+.comparison-slider .handle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.comparison-slider .handle::after {
+  content: '↔';
+  color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  font-weight: bold;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+
+/* Pulsating glow animation */
+@keyframes pulse-glow {
+  0% {
+    opacity: 0.5;
+    transform: translate(-50%, 0) scale(0.9);
+  }
+  50% {
+    opacity: 0.7;
+    transform: translate(-50%, 0) scale(1.1);
+  }
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, 0) scale(0.9);
+  }
+}
+
+.hero-glow {
+  animation: pulse-glow 8s ease-in-out infinite;
+}
+
+/* Shadow glow effect for UI elements */
+.shadow-glow {
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.3);
+}
+
+/* Starry background */
+@keyframes rotate-stars {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.9; }
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  margin-left: -50%;
+  margin-top: -50%;
+  pointer-events: none;
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIxLjUiIGZpbGw9IiM4QTJCRTIiIG9wYWNpdHk9IjAuMiIvPgo8L3N2Zz4='), 
+        url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSIxIiBmaWxsPSIjOEEyQkUyIiBvcGFjaXR5PSIwLjMiLz4KPC9zdmc+');
+  background-repeat: repeat;
+  background-size: 200px 200px, 150px 150px;
+  animation: rotate-stars 240s linear infinite;
+  opacity: 0.6;
+}
+
+.stars-small {
+  background-size: 100px 100px, 80px 80px;
+  animation: rotate-stars 180s linear infinite, twinkle 10s ease-in-out infinite;
+}
+
+.stars-large {
+  background-size: 300px 300px, 250px 250px; 
+  animation: rotate-stars 300s linear infinite reverse;
+}
