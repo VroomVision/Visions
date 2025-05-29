@@ -1,9 +1,10 @@
+import 'dotenv/config';
 import Razorpay from "razorpay";
 
 // Replace with your actual Razorpay Key ID and Key Secret
 const razorpay = new Razorpay({
-  key_id: "re_HmvNGGAz_KKBQY24ewBLMi3fXE3GnhpDR", // updated API key
-  key_secret: "gnXguBSM8RDG54KHJxuiuEG1", // keep your real secret here
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 export const createRazorpayOrder = async (amount: number, currency: string, receipt: string, email?: string) => {

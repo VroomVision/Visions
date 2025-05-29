@@ -47,7 +47,7 @@ const Checkout: React.FC = () => {
       if (!orderResponse.ok) throw new Error(orderData.message || "Order creation failed");
 
       const options = {
-        key: "rzp_test_dHkauYoJzkvNij",
+        key: "rzp_test_myXHywY5WTMuIg",
         amount: orderData.amount,
         currency: orderData.currency,
         name: "Vroom Visions",
@@ -75,7 +75,8 @@ const Checkout: React.FC = () => {
       const rzp = new window.Razorpay(options);
 
       rzp.on('modal.close', function() {
-        setPaymentStatus('cancelled'); // Payment cancelled
+        console.log('Razorpay modal closed. Setting paymentStatus to idle.');
+        setPaymentStatus('idle'); // Payment cancelled, reset status
         toast({
           title: "Payment cancelled",
           description: "You have closed the payment window.",
@@ -85,7 +86,8 @@ const Checkout: React.FC = () => {
 
       rzp.open();
     } catch (error: any) {
-      setPaymentStatus('failed'); // Payment failed
+      console.error('Razorpay payment failed.', error);
+      setPaymentStatus('idle'); // Payment failed, reset status
       toast({
         title: "Payment failed",
         description: error.message || "Payment could not be processed",
